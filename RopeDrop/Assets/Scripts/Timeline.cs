@@ -22,9 +22,18 @@ namespace RopeDropGame
             get { return timeChunks[currentTimeIndex].Time; }
         }
 
+        public int TimeChunkSize
+        {
+            get { return timeChunkSize; }
+        }
+
+        public List<TimelineChunk> TimeChunks
+        {
+            get { return timeChunks; }
+        }
+
         private DateTime ropeDrop;
 
-        [SerializeField]
         private DateTime parkClose;
 
         [SerializeField]
@@ -75,7 +84,7 @@ namespace RopeDropGame
 
         public bool IsFutureTimePastParkClose(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward < timeChunks.Count - 1)
+            if (currentTimeIndex + numChunksForward > timeChunks.Count - 1)
             {
                 return true;
             }
