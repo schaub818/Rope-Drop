@@ -19,7 +19,7 @@ namespace RopeDropGame
 
         public DateTime CurrentTime
         {
-            get { return timeChunks[currentTimeIndex].Time; }
+            get { return TimeChunks[currentTimeIndex].Time; }
         }
 
         public int TimeChunkSize
@@ -29,7 +29,8 @@ namespace RopeDropGame
 
         public List<TimelineChunk> TimeChunks
         {
-            get { return timeChunks; }
+            get;
+            set;
         }
 
         private DateTime ropeDrop;
@@ -41,14 +42,12 @@ namespace RopeDropGame
 
         private int currentTimeIndex = 0;
 
-        private List<TimelineChunk> timeChunks;
-
         // Start is called before the first frame update
         void Start()
         {
             ropeDrop = new DateTime(2023, 1, 21, 7, 0, 0);
-            parkClose = new DateTime(2023, 1, 21, 9, 0, 0);
-            timeChunks = new List<TimelineChunk>();
+            parkClose = new DateTime(2023, 1, 21, 21, 0, 0);
+            TimeChunks = new List<TimelineChunk>();
 
             TimeSpan dayLength = parkClose - ropeDrop;
 
@@ -58,7 +57,7 @@ namespace RopeDropGame
             {
                 TimeSpan minutesAdd = new TimeSpan(0, i * timeChunkSize, 0);
 
-                timeChunks.Add(new TimelineChunk(ropeDrop.Add(minutesAdd)));
+                TimeChunks.Add(new TimelineChunk(ropeDrop.Add(minutesAdd)));
             }
         }
 
@@ -70,21 +69,21 @@ namespace RopeDropGame
 
         public TimelineChunk GetFutureTime(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward < timeChunks.Count - 1)
+            if (currentTimeIndex + numChunksForward < TimeChunks.Count - 1)
             {
-                return timeChunks[currentTimeIndex + numChunksForward];
+                return TimeChunks[currentTimeIndex + numChunksForward];
             }
             else
             {
                 Debug.LogError("Trying to get future time past park close");
 
-                return timeChunks[currentTimeIndex];
+                return TimeChunks[currentTimeIndex];
             }
         }
 
         public bool IsFutureTimePastParkClose(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward > timeChunks.Count - 1)
+            if (currentTimeIndex + numChunksForward > TimeChunks.Count - 1)
             {
                 return true;
             }
@@ -96,7 +95,7 @@ namespace RopeDropGame
 
         public bool AdvanceTime(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward < timeChunks.Count - 1)
+            if (currentTimeIndex + numChunksForward < TimeChunks.Count - 1)
             {
                 currentTimeIndex += numChunksForward;
 
