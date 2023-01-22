@@ -50,7 +50,7 @@ namespace RopeDropGame
         {
             if (Input.GetMouseButtonDown(0))
             {
-                gameManager.Pawn.Move(this);
+                gameManager.UIManager.OpenAttractionPanel(this);
             }
         }
 
@@ -84,10 +84,6 @@ namespace RopeDropGame
             {
                 standbyWait = newStandbyWait;
             }
-
-            // TODO: Remove debug lines
-            Debug.Log(string.Format("Current wait time for {0}: {1}", locationName, GetStandbyWaitTime()));
-            Debug.Log(string.Format("Current crowd level: {0}", crowdLevel));
         }
 
         public void UpdateGatewayAvailability()

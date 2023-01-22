@@ -84,9 +84,6 @@ namespace Assets.Scripts
                 {
                     gameManager.Timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Light;
                 }
-
-                // TODO: remove debug line
-                //Debug.Log(string.Format("{0}: {1}", timeline.TimeChunks[i].ToString(), timeline.TimeChunks[i].CrowdLevel));
             }
         }
     }

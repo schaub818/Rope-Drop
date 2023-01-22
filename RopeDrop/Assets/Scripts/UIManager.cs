@@ -26,6 +26,11 @@ namespace Assets.Scripts
         [SerializeField]
         private TextMeshProUGUI attractionPanelGatewayText;
 
+        [SerializeField]
+        private Button walkButton;
+
+        private Attraction selectedAttraction;
+
         // Use this for initialization
         void Start()
         {
@@ -43,24 +48,52 @@ namespace Assets.Scripts
             currentTimeText.text = gameManager.Timeline.CurrentTime.ToShortTimeString();
         }
 
+        public void UpdateAttractionLabels()
+        {
+            attractionPanelHeader.text = selectedAttraction.name;
+
+            selectedAttraction.UpdateStandbyWaitTime();
+            selectedAttraction.UpdateGatewayAvailability();
+
+            attractionPanelStandbyText.text = selectedAttraction.GetStandbyWaitTime();
+            attractionPanelGatewayText.text = selectedAttraction.GetNextGatewayText();
+        }
+
         public void OpenAttractionPanel(Attraction attraction)
         {
-            UpdateCurrentTime();
+            if (attraction != gameManager.Pawn.CurrentLocation)
+            {
+                selectedAttraction = attraction;
 
-            attractionPanelHeader.text = attraction.name;
+                UpdateCurrentTime();
+                UpdateAttractionLabels();
 
-            attraction.UpdateStandbyWaitTime();
-            attraction.UpdateGatewayAvailability();
+                attractionPanel.gameObject.SetActive(true);
+                walkButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                UpdateCurrentTime();
+                UpdateAttractionLabels();
 
-            attractionPanelStandbyText.text = attraction.GetStandbyWaitTime();
-            attractionPanelGatewayText.text = attraction.GetNextGatewayText();
-
-            attractionPanel.gameObject.SetActive(true);
+                attractionPanel.gameObject.SetActive(true);
+                walkButton.gameObject.SetActive(false);
+            }
         }
 
         public void CloseAttractionPanel()
         {
             attractionPanel.gameObject.SetActive(false);
+        }
+
+        public void AttractionPanelWalkButtonOnClick()
+        {
+            gameManager.Pawn.Move(selectedAttraction);
+
+            UpdateCurrentTime();
+            UpdateAttractionLabels();
+
+            walkButton.gameObject.SetActive(false);
         }
     }
 }
