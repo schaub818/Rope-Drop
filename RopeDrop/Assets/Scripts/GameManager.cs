@@ -74,7 +74,7 @@ namespace RopeDropGame
             {
                 if (location is ParkEntrance)
                 {
-                    pawn.Move(location);
+                    pawn.Move(location, this);
 
                     break;
                 }

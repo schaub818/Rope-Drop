@@ -86,7 +86,7 @@ namespace Assets.Scripts
             {
                 portalsUsed--;
 
-                gameManager.Pawn.Move(attraction);
+                gameManager.Pawn.Move(attraction, gameManager);
 
                 return true;
             }

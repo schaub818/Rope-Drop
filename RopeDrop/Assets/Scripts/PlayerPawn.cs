@@ -24,8 +24,19 @@ namespace RopeDropGame
 
         }
 
-        public void Move(MapLocation location)
+        public void Move(MapLocation location, GameManager gameManager)
         {
+            foreach (Path path in gameManager.Map.Paths)
+            {
+                if ((path.Endpoint1 == currentLocation && path.Endpoint2 == location) ||
+                    (path.Endpoint1 == location && path.Endpoint2 == currentLocation))
+                {
+                    gameManager.Timeline.AdvanceTime((int)path.WalkTime);
+
+                    break;
+                }
+            }
+
             currentLocation = location;
             transform.position = location.Position;
         }
