@@ -37,34 +37,34 @@ namespace Assets.Scripts
             }
         }
 
-        public void SetDayCrowdLevels(Timeline timeline)
+        public void SetDayCrowdLevels(GameManager gameManager)
         {
-            int morningChunks = Mathf.RoundToInt(timeline.TimeChunks.Count * morningPercent);
-            int middayChunks = Mathf.RoundToInt(timeline.TimeChunks.Count * middayPercent);
-            int afternoonChunks = Mathf.RoundToInt(timeline.TimeChunks.Count * afternoonPercent);
-            int eveningChunks = Mathf.RoundToInt(timeline.TimeChunks.Count * eveningPercent);
+            int morningChunks = Mathf.RoundToInt(gameManager.Timeline.TimeChunks.Count * morningPercent);
+            int middayChunks = Mathf.RoundToInt(gameManager.Timeline.TimeChunks.Count * middayPercent);
+            int afternoonChunks = Mathf.RoundToInt(gameManager.Timeline.TimeChunks.Count * afternoonPercent);
+            int eveningChunks = Mathf.RoundToInt(gameManager.Timeline.TimeChunks.Count * eveningPercent);
 
-            for (int i = 0; i < timeline.TimeChunks.Count; i++)
+            for (int i = 0; i < gameManager.Timeline.TimeChunks.Count; i++)
             {
                 if (i < morningChunks)
                 {
-                    timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Light;
+                    gameManager.Timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Light;
                 }
                 else if (i < morningChunks + middayChunks)
                 {
-                    timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Heavy;
+                    gameManager.Timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Heavy;
                 }
                 else if (i < morningChunks + middayChunks + afternoonChunks)
                 {
-                    timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Medium;
+                    gameManager.Timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Medium;
                 }
                 else
                 {
-                    timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Light;
+                    gameManager.Timeline.TimeChunks[i].CrowdLevel = CrowdLevel.Light;
                 }
 
                 // TODO: remove debug line
-                Debug.Log(string.Format("{0}: {1}", timeline.TimeChunks[i].ToString(), timeline.TimeChunks[i].CrowdLevel));
+                //Debug.Log(string.Format("{0}: {1}", timeline.TimeChunks[i].ToString(), timeline.TimeChunks[i].CrowdLevel));
             }
         }
     }

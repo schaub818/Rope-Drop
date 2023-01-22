@@ -35,11 +35,11 @@ namespace Assets.Scripts
 
         }
 
-        public void Initialize(Map map)
+        public void Initialize(GameManager gameManager)
         {
             gatewayUsage = new Dictionary<MapLocation, int>();
 
-            foreach (MapLocation location in map.Locations)
+            foreach (MapLocation location in gameManager.Map.Locations)
             {
                 if (location is Attraction)
                 {
@@ -48,14 +48,14 @@ namespace Assets.Scripts
             }
         }
 
-        public bool BookGateway(Attraction attraction, Timeline timeline)
+        public bool BookGateway(Attraction attraction, GameManager gameManager)
         {
-            int bookTime = attraction.GetNextGatewayChunk(timeline);
+            int bookTime = attraction.GetNextGatewayChunk(gameManager);
 
             if (gatewayUsage[attraction] < 0 && bookTime > -1)
             {
                 gatewayUsage[attraction] = bookTime;
-                timeLastBooked = timeline.CurrentTimeChunk;
+                timeLastBooked = gameManager.Timeline.CurrentTimeChunk;
 
                 return true;
             }
@@ -80,13 +80,13 @@ namespace Assets.Scripts
             }
         }
 
-        public bool UsePortal(Attraction attraction, PlayerPawn pawn)
+        public bool UsePortal(Attraction attraction, GameManager gameManager)
         {
             if (portalsUsed > 0)
             {
                 portalsUsed--;
 
-                pawn.Move(attraction);
+                gameManager.Pawn.Move(attraction);
 
                 return true;
             }

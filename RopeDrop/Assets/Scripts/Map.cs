@@ -11,8 +11,16 @@ namespace RopeDropGame
             get { return locations; }
         }
 
+        public List<Path> Paths
+        {
+            get { return paths; }
+        }
+
         [SerializeField]
         private List<MapLocation> locations;
+
+        [SerializeField]
+        private List<Path> paths;
 
         // Use this for initialization
         void Start()

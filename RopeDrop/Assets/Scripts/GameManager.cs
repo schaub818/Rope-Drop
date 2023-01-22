@@ -7,6 +7,42 @@ namespace RopeDropGame
 {
     public class GameManager : MonoBehaviour
     {
+        public Timeline Timeline
+        {
+            get { return timeline; }
+            set { timeline = value; }
+        }
+
+        public Map Map
+        {
+            get { return map; }
+            set { map = value; }
+        }
+
+        public PlayerPawn Pawn
+        {
+            get { return pawn; }
+            set { pawn = value; }
+        }
+
+        public ParkCrowd Crowd
+        {
+            get { return crowd; }
+            set { crowd = value; }
+        }
+
+        public MagicPassPlus MagicPass
+        {
+            get { return magicPass; }
+            set { magicPass = value; }
+        }
+
+        public ScoringSystem ScoringSystem
+        {
+            get { return scoringSystem; }
+            set { scoringSystem = value; }
+        }
+
         [SerializeField]
         private Timeline timeline;
 
@@ -22,14 +58,17 @@ namespace RopeDropGame
         [SerializeField]
         private MagicPassPlus magicPass;
 
+        [SerializeField]
+        private ScoringSystem scoringSystem;
+
         // Use this for initialization
         void Start()
         {
             timeline.Intialize();
             crowd.Intialize();
-            magicPass.Initialize(map);
+            magicPass.Initialize(this);
 
-            crowd.SetDayCrowdLevels(timeline);
+            crowd.SetDayCrowdLevels(this);
 
             foreach (MapLocation location in map.Locations)
             {

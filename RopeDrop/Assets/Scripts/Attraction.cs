@@ -43,16 +43,16 @@ namespace RopeDropGame
 
         }
 
-        public string GetStandbyWaitTime(Timeline timeline)
+        public string GetStandbyWaitTime(GameManager gameManager)
         {
-            return string.Format("{0} minutes", standbyWait * timeline.TimeChunkSize);
+            return string.Format("{0} minutes", standbyWait * gameManager.Timeline.TimeChunkSize);
         }
 
-        public string GetNextGatewayText(Timeline timeline)
+        public string GetNextGatewayText(GameManager gameManager)
         {
             if (nextAvailableGateway > -1)
             {
-                if (timeline.IsFutureTimePastParkClose(nextAvailableGateway))
+                if (gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))
                 {
                     nextAvailableGateway = -1;
 
@@ -60,7 +60,7 @@ namespace RopeDropGame
                 }
                 else
                 {
-                    return timeline.GetFutureTime(nextAvailableGateway).ToString();
+                    return gameManager.Timeline.GetFutureTime(nextAvailableGateway).ToString();
                 }
             }
             else
@@ -69,11 +69,11 @@ namespace RopeDropGame
             }
         }
 
-        public int GetNextGatewayChunk(Timeline timeline)
+        public int GetNextGatewayChunk(GameManager gameManager)
         {
             if (nextAvailableGateway > -1)
             {
-                if (timeline.IsFutureTimePastParkClose(nextAvailableGateway))
+                if (gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))
                 {
                     nextAvailableGateway = -1;
                 }
@@ -82,20 +82,20 @@ namespace RopeDropGame
             return nextAvailableGateway;
         }
 
-        public void RideStandby(ScoringSystem scoringSystem, Timeline timeline)
+        public void RideStandby(GameManager gameManager)
         {
-            scoringSystem.AddScore((int)tier);
+            gameManager.ScoringSystem.AddScore((int)tier);
 
-            timeline.AdvanceTime(standbyWait);
+            gameManager.Timeline.AdvanceTime(standbyWait);
         }
 
-        public bool RideGateway(ScoringSystem scoringSystem, Timeline timeline)
+        public bool RideGateway(GameManager gameManager)
         {
             if (nextAvailableGateway >= 0)
             {
-                scoringSystem.AddScore((int)tier);
+                gameManager.ScoringSystem.AddScore((int)tier);
 
-                timeline.AdvanceTime(1);
+                gameManager.Timeline.AdvanceTime(1);
 
                 return true;
             }
