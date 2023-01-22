@@ -27,7 +27,7 @@ namespace RopeDropGame
         private int maxWaitSwing;
 
         private int standbyWait;
-        private int nextAvailableGateway;
+        private int nextAvailableGateway = 0;
         private RandomDistribution random;
 
         public Attraction(string attractionName, Tier attractionTier) : base(attractionName)
@@ -90,9 +90,23 @@ namespace RopeDropGame
             Debug.Log(string.Format("Current crowd level: {0}", crowdLevel));
         }
 
+        public void UpdateGatewayAvailability()
+        {
+            CrowdLevel crowdLevel = gameManager.Crowd.CurrentLevel;
+            int tierModifier = gameManager.Crowd.TierModifier[tier];
+
+            nextAvailableGateway = Mathf.Clamp((int)crowdLevel * (tierModifier * 2) + random.RandomInt() * 3 +
+                Mathf.RoundToInt((float)standbyWait + Random.Range(0.0f, 1.0f)), 0, 100000);
+
+            if (gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))
+            {
+                nextAvailableGateway = -1;
+            }
+        }
+
         public string GetStandbyWaitTime()
         {
-            return string.Format("{0} minutes", standbyWait * gameManager.Timeline.TimeChunkSize);
+            return string.Format("Standby Line: {0} minutes", standbyWait * gameManager.Timeline.TimeChunkSize);
         }
 
         public string GetNextGatewayText()
@@ -107,7 +121,7 @@ namespace RopeDropGame
                 }
                 else
                 {
-                    return gameManager.Timeline.GetFutureTime(nextAvailableGateway).ToString();
+                    return string.Format("Golden Gateway available at: {0}", gameManager.Timeline.GetFutureTime(nextAvailableGateway).ToString());
                 }
             }
             else

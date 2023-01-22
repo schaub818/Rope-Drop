@@ -90,6 +90,7 @@ namespace RopeDropGame
                 }
             }
 
+            uiManager.UpdateCurrentTime();
             uiManager.CloseAttractionPanel();
         }
 

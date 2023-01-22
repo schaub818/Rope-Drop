@@ -9,13 +9,22 @@ namespace Assets.Scripts
     public class UIManager : MonoBehaviour
     {
         [SerializeField]
+        private GameManager gameManager;
+
+        [SerializeField]
+        private TextMeshProUGUI currentTimeText;
+
+        [SerializeField]
         private RectTransform attractionPanel;
 
         [SerializeField]
-        TextMeshProUGUI attractionPanelHeader;
+        private TextMeshProUGUI attractionPanelHeader;
 
         [SerializeField]
-        TextMeshProUGUI attractionPanelStandby;
+        private TextMeshProUGUI attractionPanelStandbyText;
+
+        [SerializeField]
+        private TextMeshProUGUI attractionPanelGatewayText;
 
         // Use this for initialization
         void Start()
@@ -29,10 +38,22 @@ namespace Assets.Scripts
 
         }
 
+        public void UpdateCurrentTime()
+        {
+            currentTimeText.text = gameManager.Timeline.CurrentTime.ToShortTimeString();
+        }
+
         public void OpenAttractionPanel(Attraction attraction)
         {
+            UpdateCurrentTime();
+
             attractionPanelHeader.text = attraction.name;
-            attractionPanelStandby.text = string.Format("Standby wait: {0}", attraction.GetStandbyWaitTime());
+
+            attraction.UpdateStandbyWaitTime();
+            attraction.UpdateGatewayAvailability();
+
+            attractionPanelStandbyText.text = attraction.GetStandbyWaitTime();
+            attractionPanelGatewayText.text = attraction.GetNextGatewayText();
 
             attractionPanel.gameObject.SetActive(true);
         }
