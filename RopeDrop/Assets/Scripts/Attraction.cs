@@ -47,7 +47,7 @@ namespace RopeDropGame
             return string.Format("{0} minutes", standbyWait * timeline.TimeChunkSize);
         }
 
-        public string GetNextAvailableGateway(Timeline timeline)
+        public string GetNextGatewayText(Timeline timeline)
         {
             if (nextAvailableGateway > -1)
             {
@@ -66,6 +66,19 @@ namespace RopeDropGame
             {
                 return "No Gateways currently available";
             }
+        }
+
+        public int GetNextGatewayChunk(Timeline timeline)
+        {
+            if (nextAvailableGateway > -1)
+            {
+                if (timeline.IsFutureTimePastParkClose(nextAvailableGateway))
+                {
+                    nextAvailableGateway = -1;
+                }
+            }
+
+            return nextAvailableGateway;
         }
     }
 }

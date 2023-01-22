@@ -19,11 +19,15 @@ namespace RopeDropGame
         [SerializeField]
         private ParkCrowd crowd;
 
+        [SerializeField]
+        private MagicPassPlus magicPass;
+
         // Use this for initialization
         void Start()
         {
             timeline.Intialize();
             crowd.Intialize();
+            magicPass.Initialize(map);
 
             crowd.SetDayCrowdLevels(timeline);
         }

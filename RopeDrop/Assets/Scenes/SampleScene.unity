@@ -518,6 +518,7 @@ MonoBehaviour:
   map: {fileID: 2066137497}
   pawn: {fileID: 37079925}
   crowd: {fileID: 1650638561}
+  magicPass: {fileID: 1887707597}
 --- !u!4 &1742111806
 Transform:
   m_ObjectHideFlags: 0
@@ -578,6 +579,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1887707596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1887707598}
+  - component: {fileID: 1887707597}
+  m_Layer: 0
+  m_Name: MagicPass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1887707597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887707596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd83976f2dba0d042bbf0726b6d99bfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalPortals: 1
+--- !u!4 &1887707598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887707596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3294176, y: 0.6823532, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2066137496
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +653,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f5ac0532c24784db9a62b9e798ccc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locations: []
+  locations:
+  - {fileID: 1736661114}
+  - {fileID: 160294051}
+  - {fileID: 1399785021}
 --- !u!4 &2066137498
 Transform:
   m_ObjectHideFlags: 0
