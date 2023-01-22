@@ -66,15 +66,15 @@ namespace RopeDropGame
         {
             timeline.Intialize();
             crowd.Intialize();
-            magicPass.Initialize(this);
+            magicPass.Initialize();
 
-            crowd.SetDayCrowdLevels(this);
+            crowd.SetDayCrowdLevels();
 
             foreach (MapLocation location in map.Locations)
             {
                 if (location is ParkEntrance)
                 {
-                    pawn.Move(location, this);
+                    pawn.Warp(location);
 
                     break;
                 }

@@ -23,6 +23,9 @@ namespace Assets.Scripts
         }
 
         [SerializeField]
+        GameManager gameManager;
+
+        [SerializeField]
         private int totalPortals = 1;
 
         private int portalsUsed = 0;
@@ -35,7 +38,7 @@ namespace Assets.Scripts
 
         }
 
-        public void Initialize(GameManager gameManager)
+        public void Initialize()
         {
             gatewayUsage = new Dictionary<MapLocation, int>();
 
@@ -48,9 +51,9 @@ namespace Assets.Scripts
             }
         }
 
-        public bool BookGateway(Attraction attraction, GameManager gameManager)
+        public bool BookGateway(Attraction attraction)
         {
-            int bookTime = attraction.GetNextGatewayChunk(gameManager);
+            int bookTime = attraction.GetNextGatewayChunk();
 
             if (gatewayUsage[attraction] < 0 && bookTime > -1)
             {
@@ -80,13 +83,13 @@ namespace Assets.Scripts
             }
         }
 
-        public bool UsePortal(Attraction attraction, GameManager gameManager)
+        public bool UsePortal(Attraction attraction)
         {
             if (portalsUsed > 0)
             {
                 portalsUsed--;
 
-                gameManager.Pawn.Move(attraction, gameManager);
+                gameManager.Pawn.Move(attraction);
 
                 return true;
             }

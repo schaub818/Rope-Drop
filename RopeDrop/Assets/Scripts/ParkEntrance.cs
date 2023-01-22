@@ -5,6 +5,9 @@ namespace RopeDropGame
 {
     public class ParkEntrance : MapLocation
     {
+        [SerializeField]
+        private GameManager gameManager;
+
         public ParkEntrance(string entranceName) : base(entranceName)
         {
 
@@ -20,6 +23,14 @@ namespace RopeDropGame
         void Update()
         {
 
+        }
+
+        protected override void OnMouseDown()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                gameManager.Pawn.Move(this);
+            }
         }
     }
 }

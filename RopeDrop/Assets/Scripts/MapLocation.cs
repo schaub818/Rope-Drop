@@ -22,5 +22,7 @@ namespace RopeDropGame
         {
             locationName = name;
         }
+
+        protected abstract void OnMouseDown();
     }
 }

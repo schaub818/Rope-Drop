@@ -10,6 +10,9 @@ namespace Assets.Scripts
         private CrowdLevel currentLevel;
 
         [SerializeField]
+        GameManager gameManager;
+
+        [SerializeField]
         private float morningPercent;
 
         [SerializeField]
@@ -33,11 +36,11 @@ namespace Assets.Scripts
 
             if (totalPercent != 1.0f)
             {
-                Debug.LogError(string.Format("Crowd day percentages don't add up to 1: {0}, {1}, {2}, {3}", morningPercent, middayPercent, afternoonPercent, eveningPercent));
+                Debug.LogError(string.Format("Crowd day percentages don't add up to 1: {0}, {1}, {2}, {3} Total: {4}", morningPercent, middayPercent, afternoonPercent, eveningPercent, totalPercent));
             }
         }
 
-        public void SetDayCrowdLevels(GameManager gameManager)
+        public void SetDayCrowdLevels()
         {
             int morningChunks = Mathf.RoundToInt(gameManager.Timeline.TimeChunks.Count * morningPercent);
             int middayChunks = Mathf.RoundToInt(gameManager.Timeline.TimeChunks.Count * middayPercent);

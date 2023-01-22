@@ -69,6 +69,9 @@ namespace RopeDropGame
 
                 TimeChunks.Add(new TimelineChunk(ropeDrop.Add(minutesAdd)));
             }
+
+            // TODO: remove debug line
+            Debug.Log(string.Format("Current time: {0}", CurrentTime.ToShortTimeString()));
         }
 
         public TimelineChunk GetFutureTime(int numChunksForward)
@@ -102,6 +105,9 @@ namespace RopeDropGame
             if (currentTimeChunk + numChunksForward < TimeChunks.Count - 1)
             {
                 currentTimeChunk += numChunksForward;
+
+                // TODO: remove debug line
+                Debug.Log(string.Format("Current time: {0}", CurrentTime.ToShortTimeString()));
 
                 return true;
             }

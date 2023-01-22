@@ -18,6 +18,9 @@ namespace RopeDropGame
         }
 
         [SerializeField]
+        GameManager gameManager;
+
+        [SerializeField]
         private Tier tier = Tier.E;
 
         [SerializeField]
@@ -43,12 +46,20 @@ namespace RopeDropGame
 
         }
 
-        public string GetStandbyWaitTime(GameManager gameManager)
+        protected override void OnMouseDown()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                gameManager.Pawn.Move(this);
+            }
+        }
+
+        public string GetStandbyWaitTime()
         {
             return string.Format("{0} minutes", standbyWait * gameManager.Timeline.TimeChunkSize);
         }
 
-        public string GetNextGatewayText(GameManager gameManager)
+        public string GetNextGatewayText()
         {
             if (nextAvailableGateway > -1)
             {
@@ -69,7 +80,7 @@ namespace RopeDropGame
             }
         }
 
-        public int GetNextGatewayChunk(GameManager gameManager)
+        public int GetNextGatewayChunk()
         {
             if (nextAvailableGateway > -1)
             {
@@ -82,14 +93,14 @@ namespace RopeDropGame
             return nextAvailableGateway;
         }
 
-        public void RideStandby(GameManager gameManager)
+        public void RideStandby()
         {
             gameManager.ScoringSystem.AddScore((int)tier);
 
             gameManager.Timeline.AdvanceTime(standbyWait);
         }
 
-        public bool RideGateway(GameManager gameManager)
+        public bool RideGateway()
         {
             if (nextAvailableGateway >= 0)
             {
