@@ -2,7 +2,7 @@
 {
     public enum CrowdLevel
     {
-        Light = 1,
+        Light = 0,
         Medium = 2,
         Heavy = 4
     }

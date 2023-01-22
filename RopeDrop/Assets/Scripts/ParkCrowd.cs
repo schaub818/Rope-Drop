@@ -54,9 +54,9 @@ namespace Assets.Scripts
 
             tierModifier.Add(Tier.A, 0);
             tierModifier.Add(Tier.B, 1);
-            tierModifier.Add(Tier.C, 2);
-            tierModifier.Add(Tier.D, 3);
-            tierModifier.Add(Tier.E, 5);
+            tierModifier.Add(Tier.C, 3);
+            tierModifier.Add(Tier.D, 5);
+            tierModifier.Add(Tier.E, 8);
         }
 
         public void SetDayCrowdLevels()

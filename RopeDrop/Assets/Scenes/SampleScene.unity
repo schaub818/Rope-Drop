@@ -750,6 +750,7 @@ GameObject:
   - component: {fileID: 1399785021}
   - component: {fileID: 1399785023}
   - component: {fileID: 1399785024}
+  - component: {fileID: 1399785025}
   m_Layer: 0
   m_Name: Attraction2
   m_TagString: Untagged
@@ -771,8 +772,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Attraction2
   gameManager: {fileID: 1742111805}
-  tier: 400
-  crowdVarianceRange: 15
+  tier: 500
+  maxWaitSwing: 5
 --- !u!4 &1399785022
 Transform:
   m_ObjectHideFlags: 0
@@ -866,6 +867,68 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1399785025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399785020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64390e1f1b792c843adcd52a5afa04cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distributionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -5.983285
+      value: 1.2093606
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 6.7201324
+      value: 4.7445045
+      inSlope: 0.0027173238
+      outSlope: 0.0027173238
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.21407403
+    - serializedVersion: 3
+      time: 12.053556
+      value: 1.496535
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveRect:
+    minX: -5.983285
+    maxX: 12.053556
+    minY: 1.2093606
+    maxY: 4.7445097
+    rectangle:
+      serializedVersion: 2
+      x: -5.983285
+      y: 4.7445097
+      width: 18.036842
+      height: 3.535149
+  randomizeMode: 0
+  showOptions: 0
+  prebakeResolution: 500
+  numberBakery:
+    prebakedFloats: []
+    prebakedInts: 
 --- !u!1 &1407236133
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,6 +1037,7 @@ GameObject:
   - component: {fileID: 1736661114}
   - component: {fileID: 1736661116}
   - component: {fileID: 1736661117}
+  - component: {fileID: 1736661118}
   m_Layer: 0
   m_Name: Attraction1
   m_TagString: Untagged
@@ -995,8 +1059,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Attraction1
   gameManager: {fileID: 1742111805}
-  tier: 300
-  crowdVarianceRange: 10
+  tier: 100
+  maxWaitSwing: 2
 --- !u!4 &1736661115
 Transform:
   m_ObjectHideFlags: 0
@@ -1090,6 +1154,68 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1736661118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736661113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64390e1f1b792c843adcd52a5afa04cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distributionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -3.0149393
+      value: 1.1850721
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: -1.3737335
+      value: 3.8923597
+      inSlope: 0.0027173238
+      outSlope: 0.0027173238
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.21407403
+    - serializedVersion: 3
+      time: 1.9917865
+      value: 1.4761065
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveRect:
+    minX: -3.0149393
+    maxX: 1.5058265
+    minY: 1.1850721
+    maxY: 3.8923619
+    rectangle:
+      serializedVersion: 2
+      x: -3.0149393
+      y: 3.8923619
+      width: 4.520766
+      height: 2.7072897
+  randomizeMode: 0
+  showOptions: 0
+  prebakeResolution: 500
+  numberBakery:
+    prebakedFloats: []
+    prebakedInts: 
 --- !u!1 &1742111804
 GameObject:
   m_ObjectHideFlags: 0

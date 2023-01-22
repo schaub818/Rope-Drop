@@ -22,16 +22,23 @@ namespace RopeDropGame
         [SerializeField]
         private List<Path> paths;
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        public void Initialize()
+        {
+            foreach (MapLocation location in locations)
+            {
+                if (location is Attraction)
+                {
+                    Attraction attraction = (Attraction)location;
+
+                    attraction.Initialize();
+                }
+            }
         }
     }
 }

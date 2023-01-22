@@ -66,6 +66,7 @@ namespace RopeDropGame
         {
             timeline.Intialize();
             crowd.Intialize();
+            map.Initialize();
             magicPass.Initialize();
 
             crowd.SetDayCrowdLevels();
