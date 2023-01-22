@@ -7,6 +7,12 @@ namespace RopeDropGame
 {
     public class GameManager : MonoBehaviour
     {
+        public UIManager UIManager
+        {
+            get { return uiManager; }
+            set { uiManager = value; }
+        }
+
         public Timeline Timeline
         {
             get { return timeline; }
@@ -42,6 +48,9 @@ namespace RopeDropGame
             get { return scoringSystem; }
             set { scoringSystem = value; }
         }
+
+        [SerializeField]
+        private UIManager uiManager;
 
         [SerializeField]
         private Timeline timeline;
@@ -80,6 +89,8 @@ namespace RopeDropGame
                     break;
                 }
             }
+
+            uiManager.CloseAttractionPanel();
         }
 
         // Update is called once per frame

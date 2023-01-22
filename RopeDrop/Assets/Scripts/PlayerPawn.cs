@@ -54,6 +54,7 @@ namespace RopeDropGame
                     Attraction attraction = (Attraction)location;
 
                     attraction.UpdateStandbyWaitTime();
+                    gameManager.UIManager.OpenAttractionPanel(attraction);
                 }
             }
             else
