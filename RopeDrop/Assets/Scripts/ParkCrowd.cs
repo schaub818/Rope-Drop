@@ -21,8 +21,13 @@ namespace Assets.Scripts
         [SerializeField]
         private float eveningPercent;
 
-        // Use this for initialization
-        void Start()
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        public void Intialize()
         {
             float totalPercent = morningPercent + middayPercent + afternoonPercent + eveningPercent;
 
@@ -30,12 +35,6 @@ namespace Assets.Scripts
             {
                 Debug.LogError(string.Format("Crowd day percentages don't add up to 1: {0}, {1}, {2}, {3}", morningPercent, middayPercent, afternoonPercent, eveningPercent));
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         public void SetDayCrowdLevels(Timeline timeline)

@@ -42,8 +42,13 @@ namespace RopeDropGame
 
         private int currentTimeIndex = 0;
 
-        // Start is called before the first frame update
-        void Start()
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        public void Intialize()
         {
             ropeDrop = new DateTime(2023, 1, 21, 7, 0, 0);
             parkClose = new DateTime(2023, 1, 21, 21, 0, 0);
@@ -59,12 +64,6 @@ namespace RopeDropGame
 
                 TimeChunks.Add(new TimelineChunk(ropeDrop.Add(minutesAdd)));
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         public TimelineChunk GetFutureTime(int numChunksForward)
