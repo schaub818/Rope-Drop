@@ -54,6 +54,20 @@ namespace RopeDropGame
             }
         }
 
+        public void UpdateStandbyWaitTime()
+        {
+            CrowdLevel crowdLevel = gameManager.Crowd.CurrentLevel;
+            int tierModifier = gameManager.Crowd.TierModifier[tier];
+            int timeChunkSize = gameManager.Timeline.TimeChunkSize;
+
+            standbyWait = Mathf.Clamp(((int)crowdLevel + tierModifier + Random.Range(-crowdVarianceRange, crowdVarianceRange)) * timeChunkSize,
+                0, 1000000);
+
+            // TODO: Remove debug lines
+            Debug.Log(string.Format("Current wait time for {0}: {1}", locationName, standbyWait));
+            Debug.Log(string.Format("Current crowd level: {0}", crowdLevel));
+        }
+
         public string GetStandbyWaitTime()
         {
             return string.Format("{0} minutes", standbyWait * gameManager.Timeline.TimeChunkSize);

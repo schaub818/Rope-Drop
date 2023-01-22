@@ -771,8 +771,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Attraction2
   gameManager: {fileID: 1742111805}
-  tier: 300
-  crowdVarianceRange: 0
+  tier: 200
+  crowdVarianceRange: 1
 --- !u!4 &1399785022
 Transform:
   m_ObjectHideFlags: 0
@@ -995,7 +995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Attraction1
   gameManager: {fileID: 1742111805}
-  tier: 500
+  tier: 100
   crowdVarianceRange: 0
 --- !u!4 &1736661115
 Transform:

@@ -7,7 +7,18 @@ namespace Assets.Scripts
 {
     public class ParkCrowd : MonoBehaviour
     {
+        public CrowdLevel CurrentLevel
+        {
+            get { return currentLevel; }
+        }
+
+        public Dictionary<Tier, int> TierModifier
+        {
+            get { return tierModifier; }
+        }
+
         private CrowdLevel currentLevel;
+        private Dictionary<Tier, int> tierModifier;
 
         [SerializeField]
         GameManager gameManager;
@@ -27,7 +38,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-
+            currentLevel = gameManager.Timeline.GetFutureTime(0).CrowdLevel;
         }
 
         public void Intialize()
@@ -38,6 +49,14 @@ namespace Assets.Scripts
             {
                 Debug.LogError(string.Format("Crowd day percentages don't add up to 1: {0}, {1}, {2}, {3} Total: {4}", morningPercent, middayPercent, afternoonPercent, eveningPercent, totalPercent));
             }
+
+            tierModifier = new Dictionary<Tier, int>();
+
+            tierModifier.Add(Tier.A, 0);
+            tierModifier.Add(Tier.B, 1);
+            tierModifier.Add(Tier.C, 2);
+            tierModifier.Add(Tier.D, 3);
+            tierModifier.Add(Tier.E, 5);
         }
 
         public void SetDayCrowdLevels()

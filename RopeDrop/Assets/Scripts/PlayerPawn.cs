@@ -47,6 +47,14 @@ namespace RopeDropGame
             {
                 currentLocation = location;
                 transform.position = location.Position;
+
+                // TODO: Remove debug lines
+                if (location is Attraction)
+                {
+                    Attraction attraction = (Attraction)location;
+
+                    attraction.UpdateStandbyWaitTime();
+                }
             }
             else
             {
