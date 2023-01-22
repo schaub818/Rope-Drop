@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,6 +80,29 @@ namespace RopeDropGame
             }
 
             return nextAvailableGateway;
+        }
+
+        public void RideStandby(ScoringSystem scoringSystem, Timeline timeline)
+        {
+            scoringSystem.AddScore((int)tier);
+
+            timeline.AdvanceTime(standbyWait);
+        }
+
+        public bool RideGateway(ScoringSystem scoringSystem, Timeline timeline)
+        {
+            if (nextAvailableGateway >= 0)
+            {
+                scoringSystem.AddScore((int)tier);
+
+                timeline.AdvanceTime(1);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

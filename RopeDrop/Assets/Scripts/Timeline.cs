@@ -19,7 +19,12 @@ namespace RopeDropGame
 
         public DateTime CurrentTime
         {
-            get { return TimeChunks[currentTimeIndex].Time; }
+            get { return TimeChunks[currentTimeChunk].Time; }
+        }
+
+        public int CurrentTimeChunk
+        {
+            get { return currentTimeChunk; }
         }
 
         public int TimeChunkSize
@@ -40,7 +45,7 @@ namespace RopeDropGame
         [SerializeField]
         private int timeChunkSize = 5;
 
-        private int currentTimeIndex = 0;
+        private int currentTimeChunk = 0;
 
         // Update is called once per frame
         void Update()
@@ -68,21 +73,21 @@ namespace RopeDropGame
 
         public TimelineChunk GetFutureTime(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward < TimeChunks.Count - 1)
+            if (currentTimeChunk + numChunksForward < TimeChunks.Count - 1)
             {
-                return TimeChunks[currentTimeIndex + numChunksForward];
+                return TimeChunks[currentTimeChunk + numChunksForward];
             }
             else
             {
                 Debug.LogError("Trying to get future time past park close");
 
-                return TimeChunks[currentTimeIndex];
+                return TimeChunks[currentTimeChunk];
             }
         }
 
         public bool IsFutureTimePastParkClose(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward > TimeChunks.Count - 1)
+            if (currentTimeChunk + numChunksForward > TimeChunks.Count - 1)
             {
                 return true;
             }
@@ -94,9 +99,9 @@ namespace RopeDropGame
 
         public bool AdvanceTime(int numChunksForward)
         {
-            if (currentTimeIndex + numChunksForward < TimeChunks.Count - 1)
+            if (currentTimeChunk + numChunksForward < TimeChunks.Count - 1)
             {
-                currentTimeIndex += numChunksForward;
+                currentTimeChunk += numChunksForward;
 
                 return true;
             }

@@ -55,6 +55,22 @@ namespace Assets.Scripts
             if (gatewayUsage[attraction] < 0 && bookTime > -1)
             {
                 gatewayUsage[attraction] = bookTime;
+                timeLastBooked = timeline.CurrentTimeChunk;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CancelGateway(Attraction attraction)
+        {
+            if (gatewayUsage[attraction] >= 0)
+            {
+                gatewayUsage[attraction] = -1;
+                timeLastBooked = -1;
 
                 return true;
             }

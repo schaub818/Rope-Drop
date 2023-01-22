@@ -30,6 +30,16 @@ namespace RopeDropGame
             magicPass.Initialize(map);
 
             crowd.SetDayCrowdLevels(timeline);
+
+            foreach (MapLocation location in map.Locations)
+            {
+                if (location is ParkEntrance)
+                {
+                    pawn.Move(location);
+
+                    break;
+                }
+            }
         }
 
         // Update is called once per frame
