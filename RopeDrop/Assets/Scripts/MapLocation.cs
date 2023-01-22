@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RopeDropGame
 {
-    public class MapLocation : MonoBehaviour
+    public abstract class MapLocation : MonoBehaviour
     {
         public Vector3 Position
         {
