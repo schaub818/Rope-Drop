@@ -60,8 +60,8 @@ namespace RopeDropGame
             int tierModifier = gameManager.Crowd.TierModifier[tier];
             int timeChunkSize = gameManager.Timeline.TimeChunkSize;
 
-            standbyWait = Mathf.Clamp(((int)crowdLevel + tierModifier + Random.Range(-crowdVarianceRange, crowdVarianceRange)) * timeChunkSize,
-                0, 1000000);
+            standbyWait = Mathf.Clamp(((int)crowdLevel + tierModifier + Random.Range(-crowdVarianceRange, crowdVarianceRange / 2)) * timeChunkSize,
+                timeChunkSize, 1000000);
 
             // TODO: Remove debug lines
             Debug.Log(string.Format("Current wait time for {0}: {1}", locationName, standbyWait));
