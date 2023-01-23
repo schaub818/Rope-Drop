@@ -10,6 +10,11 @@ namespace Assets.Scripts
             get { return currentScore; }
         }
 
+        public string CurrentScoreText
+        {
+            get { return currentScore.ToString("D6"); }
+        }
+
         private int currentScore = 0;
 
         // Use this for initialization

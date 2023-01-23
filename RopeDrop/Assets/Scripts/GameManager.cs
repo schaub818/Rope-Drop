@@ -49,6 +49,11 @@ namespace RopeDropGame
             set { scoringSystem = value; }
         }
 
+        public bool ParkClosed
+        {
+            get { return parkClosed; }
+        }
+
         [SerializeField]
         private UIManager uiManager;
 
@@ -70,6 +75,8 @@ namespace RopeDropGame
         [SerializeField]
         private ScoringSystem scoringSystem;
 
+        private bool parkClosed;
+
         // Use this for initialization
         void Start()
         {
@@ -79,6 +86,8 @@ namespace RopeDropGame
             magicPass.Initialize();
 
             crowd.SetDayCrowdLevels();
+
+            parkClosed = false;
 
             foreach (MapLocation location in map.Locations)
             {
@@ -95,12 +104,21 @@ namespace RopeDropGame
             uiManager.UpdateCurrentTime();
             uiManager.UpdateScore();
             uiManager.CloseAttractionPanel();
+            uiManager.CloseParkClosedPanel();
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        public void ClosePark()
+        {
+            parkClosed = true;
+
+            uiManager.CloseApp();
+            uiManager.OpenParkClosedPanel();
         }
     }
 }

@@ -43,6 +43,9 @@ namespace RopeDropGame
         private DateTime parkClose;
 
         [SerializeField]
+        private GameManager gameManager;
+
+        [SerializeField]
         private int timeChunkSize = 5;
 
         private int currentTimeChunk = 0;
@@ -112,7 +115,7 @@ namespace RopeDropGame
             }
             else
             {
-                Debug.LogError("Trying to advance time past park close");
+                gameManager.ClosePark();
 
                 return false;
             }

@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -10,6 +11,9 @@ namespace Assets.Scripts
     {
         [SerializeField]
         private GameManager gameManager;
+
+        [SerializeField]
+        private RectTransform appPanel;
 
         [SerializeField]
         private TextMeshProUGUI currentTimeText;
@@ -41,6 +45,12 @@ namespace Assets.Scripts
         [SerializeField]
         private Button rideGatewayButton;
 
+        [SerializeField]
+        private RectTransform parkClosedPanel;
+
+        [SerializeField]
+        private TextMeshProUGUI finalScoreText;
+
         private Attraction selectedAttraction;
         private Attraction currentAttraction;
 
@@ -63,7 +73,7 @@ namespace Assets.Scripts
 
         public void UpdateScore()
         {
-            scoreText.text = gameManager.ScoringSystem.CurrentScore.ToString("D6");
+            scoreText.text = gameManager.ScoringSystem.CurrentScoreText;
         }
 
         public void UpdateAttractionLabels()
@@ -121,6 +131,23 @@ namespace Assets.Scripts
             attractionPanel.gameObject.SetActive(false);
         }
 
+        public void OpenParkClosedPanel()
+        {
+            finalScoreText.text = string.Format("You had {0} points of fun today!", gameManager.ScoringSystem.CurrentScoreText);
+
+            parkClosedPanel.gameObject.SetActive(true);
+        }
+
+        public void CloseParkClosedPanel()
+        {
+            parkClosedPanel.gameObject.SetActive(false);
+        }
+
+        public void CloseApp()
+        {
+            appPanel.gameObject.SetActive(false);
+        }
+
         public void AttractionPanelWalkButtonOnClick()
         {
             gameManager.Pawn.Move(selectedAttraction);
@@ -165,6 +192,11 @@ namespace Assets.Scripts
             UpdateCurrentTime();
             UpdateScore();
             UpdateAttractionLabels();
+        }
+
+        public void ParkClosedPanelRestartGameButtonOnClick()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

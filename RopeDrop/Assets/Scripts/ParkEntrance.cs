@@ -27,10 +27,7 @@ namespace RopeDropGame
 
         protected override void OnMouseDown()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                gameManager.Pawn.Move(this);
-            }
+            // Do nothing
         }
     }
 }
