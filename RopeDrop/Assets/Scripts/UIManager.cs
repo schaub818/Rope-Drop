@@ -9,6 +9,11 @@ namespace Assets.Scripts
 {
     public class UIManager : MonoBehaviour
     {
+        public bool UIActive
+        {
+            get { return uiActive; }
+        }
+
         [SerializeField]
         private GameManager gameManager;
 
@@ -54,10 +59,12 @@ namespace Assets.Scripts
         private Attraction selectedAttraction;
         private Attraction currentAttraction;
 
+        private bool uiActive;
+
         // Use this for initialization
         void Start()
         {
-
+            uiActive = true;
         }
 
         // Update is called once per frame
@@ -146,6 +153,8 @@ namespace Assets.Scripts
         public void CloseApp()
         {
             appPanel.gameObject.SetActive(false);
+
+            uiActive = false;
         }
 
         public void AttractionPanelWalkButtonOnClick()

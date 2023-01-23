@@ -42,7 +42,7 @@ namespace RopeDropGame
 
         protected override void OnMouseDown()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && gameManager.UIManager.UIActive)
             {
                 gameManager.UIManager.OpenAttractionPanel(this);
             }
