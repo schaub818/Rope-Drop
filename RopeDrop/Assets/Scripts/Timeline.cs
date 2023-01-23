@@ -85,6 +85,11 @@ namespace RopeDropGame
             }
         }
 
+        public string ChunkToText(int chunk)
+        {
+            return TimeChunks[chunk].Time.ToShortTimeString();
+        }
+
         public bool IsFutureTimePastParkClose(int numChunksForward)
         {
             if (currentTimeChunk + numChunksForward > TimeChunks.Count - 1)

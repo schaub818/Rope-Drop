@@ -84,7 +84,9 @@ namespace RopeDropGame
             CrowdLevel crowdLevel = gameManager.Crowd.CurrentLevel;
             int tierModifier = gameManager.Crowd.TierModifier[tier];
 
-            nextAvailableGateway = Mathf.Clamp((int)crowdLevel * (tierModifier * 2) + random.RandomInt() * 3 +
+            nextAvailableGateway = gameManager.Timeline.CurrentTimeChunk;
+
+            nextAvailableGateway += Mathf.Clamp((int)crowdLevel * (tierModifier * 2) + random.RandomInt() * 3 +
                 Mathf.RoundToInt((float)standbyWait + Random.Range(0.0f, 1.0f)), 0, 100000);
 
             if (gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))

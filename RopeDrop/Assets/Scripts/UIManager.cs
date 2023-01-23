@@ -38,6 +38,9 @@ namespace Assets.Scripts
         [SerializeField]
         private Button bookGatewayButton;
 
+        [SerializeField]
+        private Button rideGatewayButton;
+
         private Attraction selectedAttraction;
         private Attraction currentAttraction;
 
@@ -60,7 +63,7 @@ namespace Assets.Scripts
 
         public void UpdateScore()
         {
-            scoreText.text = gameManager.ScoringSystem.CurrentScore.ToString();
+            scoreText.text = gameManager.ScoringSystem.CurrentScore.ToString("D6");
         }
 
         public void UpdateAttractionLabels()
@@ -77,6 +80,18 @@ namespace Assets.Scripts
             else
             {
                 bookGatewayButton.gameObject.SetActive(false);
+            }
+
+            if (selectedAttraction == gameManager.Pawn.CurrentLocation &&
+                gameManager.MagicPass.IsGatewayBooked(selectedAttraction) &&
+                !gameManager.MagicPass.IsGatewayUsed(selectedAttraction) &&
+                gameManager.MagicPass.GetGatewayBooking(selectedAttraction) <= gameManager.Timeline.CurrentTimeChunk)
+            {
+                rideGatewayButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                rideGatewayButton.gameObject.SetActive(false);
             }
         }
 
@@ -138,6 +153,17 @@ namespace Assets.Scripts
                 Debug.LogError("Failed to book Gateway");
             }
 
+            UpdateAttractionLabels();
+        }
+
+        public void AttractionPanelRideGatewayButtonOnClick()
+        {
+            gameManager.MagicPass.UseGateway(currentAttraction);
+
+            gameManager.Map.UpdateAllAttractions();
+
+            UpdateCurrentTime();
+            UpdateScore();
             UpdateAttractionLabels();
         }
     }

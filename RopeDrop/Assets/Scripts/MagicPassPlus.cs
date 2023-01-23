@@ -58,13 +58,13 @@ namespace Assets.Scripts
         {
             if (!gatewayUsage[attraction] && gatewayBookings[attraction] >= 0)
             {
-                string bookingTime = gameManager.Timeline.GetFutureTime(gatewayBookings[attraction]).ToString();
+                string bookingTime = gameManager.Timeline.ChunkToText(gatewayBookings[attraction]);
 
                 return string.Format("Gateway booked for {0}", bookingTime);
             }
             else if (gatewayBookings[attraction] < 0 && !gatewayUsage[attraction] && attraction.GetNextGateway() > -1)
             {
-                string availableTime = gameManager.Timeline.GetFutureTime(attraction.GetNextGateway()).Time.ToShortTimeString();
+                string availableTime = gameManager.Timeline.ChunkToText(attraction.GetNextGateway());
 
                 return string.Format("Golden Gateway available at: {0}", availableTime);
             }
@@ -72,6 +72,11 @@ namespace Assets.Scripts
             {
                 return "No Gateways currently available";
             }
+        }
+
+        public int GetGatewayBooking(Attraction attraction)
+        {
+            return gatewayBookings[attraction];
         }
 
         public bool BookGateway(Attraction attraction)
