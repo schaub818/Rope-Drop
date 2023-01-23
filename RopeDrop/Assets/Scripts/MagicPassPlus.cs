@@ -54,11 +54,31 @@ namespace Assets.Scripts
             }
         }
 
+        public string GetGatewayBookingText(Attraction attraction)
+        {
+            if (!gatewayUsage[attraction] && gatewayBookings[attraction] >= 0)
+            {
+                string bookingTime = gameManager.Timeline.GetFutureTime(gatewayBookings[attraction]).ToString();
+
+                return string.Format("Gateway booked for {0}", bookingTime);
+            }
+            else if (gatewayBookings[attraction] < 0 && !gatewayUsage[attraction] && attraction.GetNextGateway() > -1)
+            {
+                string availableTime = gameManager.Timeline.GetFutureTime(attraction.GetNextGateway()).Time.ToShortTimeString();
+
+                return string.Format("Golden Gateway available at: {0}", availableTime);
+            }
+            else
+            {
+                return "No Gateways currently available";
+            }
+        }
+
         public bool BookGateway(Attraction attraction)
         {
-            int bookTime = attraction.GetNextGatewayChunk();
+            int bookTime = attraction.GetNextGateway();
 
-            if (gatewayBookings[attraction] < 0 && bookTime > -1)
+            if (!gatewayUsage[attraction] && gatewayBookings[attraction] < 0 && bookTime > -1)
             {
                 gatewayBookings[attraction] = bookTime;
                 timeLastBooked = gameManager.Timeline.CurrentTimeChunk;
@@ -67,6 +87,8 @@ namespace Assets.Scripts
             }
             else
             {
+                Debug.LogWarning(string.Format("No Gateway for {0} available", attraction.LocationName));
+
                 return false;
             }
         }
@@ -101,6 +123,28 @@ namespace Assets.Scripts
             {
                 return false;
             }
+        }
+
+        public bool IsGatewayAvailable(Attraction attraction)
+        {
+            if (!gatewayUsage[attraction] && gatewayBookings[attraction] < 0 && attraction.GetNextGateway() > -1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsGatewayBooked(Attraction attraction)
+        {
+            return !gatewayUsage[attraction] && gatewayBookings[attraction] >= 0;
+        }
+
+        public bool IsGatewayUsed(Attraction attraction)
+        {
+            return gatewayUsage[attraction];
         }
 
         public bool UsePortal(Attraction attraction)

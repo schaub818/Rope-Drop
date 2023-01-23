@@ -52,7 +52,6 @@ namespace RopeDropGame
         {
             CrowdLevel crowdLevel = gameManager.Crowd.CurrentLevel;
             int tierModifier = gameManager.Crowd.TierModifier[tier];
-            int timeChunkSize = gameManager.Timeline.TimeChunkSize;
 
             int newStandbyWait = Mathf.Clamp(((int)crowdLevel + tierModifier + random.RandomInt()),
                 1, 1000000);
@@ -99,35 +98,11 @@ namespace RopeDropGame
             return string.Format("Standby Line: {0} minutes", standbyWait * gameManager.Timeline.TimeChunkSize);
         }
 
-        public string GetNextGatewayText()
+        public int GetNextGateway()
         {
-            if (nextAvailableGateway > -1)
+            if (nextAvailableGateway > -1 && gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))
             {
-                if (gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))
-                {
-                    nextAvailableGateway = -1;
-
-                    return "No Gateways currently available";
-                }
-                else
-                {
-                    return string.Format("Golden Gateway available at: {0}", gameManager.Timeline.GetFutureTime(nextAvailableGateway).ToString());
-                }
-            }
-            else
-            {
-                return "No Gateways currently available";
-            }
-        }
-
-        public int GetNextGatewayChunk()
-        {
-            if (nextAvailableGateway > -1)
-            {
-                if (gameManager.Timeline.IsFutureTimePastParkClose(nextAvailableGateway))
-                {
-                    nextAvailableGateway = -1;
-                }
+                nextAvailableGateway = -1;
             }
 
             return nextAvailableGateway;

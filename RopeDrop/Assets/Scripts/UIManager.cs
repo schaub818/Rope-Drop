@@ -35,6 +35,9 @@ namespace Assets.Scripts
         [SerializeField]
         private Button standbyButton;
 
+        [SerializeField]
+        private Button bookGatewayButton;
+
         private Attraction selectedAttraction;
         private Attraction currentAttraction;
 
@@ -65,7 +68,16 @@ namespace Assets.Scripts
             attractionPanelHeader.text = selectedAttraction.name;
 
             attractionPanelStandbyText.text = selectedAttraction.GetStandbyWaitTime();
-            attractionPanelGatewayText.text = selectedAttraction.GetNextGatewayText();
+            attractionPanelGatewayText.text = gameManager.MagicPass.GetGatewayBookingText(selectedAttraction);
+
+            if (gameManager.MagicPass.IsGatewayAvailable(selectedAttraction))
+            {
+                bookGatewayButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                bookGatewayButton.gameObject.SetActive(false);
+            }
         }
 
         public void OpenAttractionPanel(Attraction attraction)
@@ -116,6 +128,16 @@ namespace Assets.Scripts
 
             UpdateCurrentTime();
             UpdateScore();
+            UpdateAttractionLabels();
+        }
+
+        public void AttractionPanelBookGatewayButtonOnClick()
+        {
+            if (!gameManager.MagicPass.BookGateway(selectedAttraction))
+            {
+                Debug.LogError("Failed to book Gateway");
+            }
+
             UpdateAttractionLabels();
         }
     }
