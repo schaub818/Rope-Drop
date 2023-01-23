@@ -40,5 +40,19 @@ namespace RopeDropGame
                 }
             }
         }
+
+        public void UpdateAllAttractions()
+        {
+            foreach (MapLocation location in locations)
+            {
+                if (location is Attraction)
+                {
+                    Attraction attraction = (Attraction)location;
+
+                    attraction.UpdateStandbyWaitTime();
+                    attraction.UpdateGatewayAvailability();
+                }
+            }
+        }
     }
 }

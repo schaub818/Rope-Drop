@@ -90,7 +90,10 @@ namespace RopeDropGame
                 }
             }
 
+            map.UpdateAllAttractions();
+
             uiManager.UpdateCurrentTime();
+            uiManager.UpdateScore();
             uiManager.CloseAttractionPanel();
         }
 

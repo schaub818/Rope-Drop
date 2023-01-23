@@ -35,12 +35,6 @@ namespace RopeDropGame
             tier = attractionTier;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void Initialize()
         {
             random = GetComponent<RandomDistribution>();
@@ -146,20 +140,11 @@ namespace RopeDropGame
             gameManager.Timeline.AdvanceTime(standbyWait);
         }
 
-        public bool RideGateway()
+        public void RideGateway()
         {
-            if (nextAvailableGateway >= 0)
-            {
-                gameManager.ScoringSystem.AddScore((int)tier);
+            gameManager.ScoringSystem.AddScore((int)tier);
 
-                gameManager.Timeline.AdvanceTime(1);
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            gameManager.Timeline.AdvanceTime(1);
         }
     }
 }

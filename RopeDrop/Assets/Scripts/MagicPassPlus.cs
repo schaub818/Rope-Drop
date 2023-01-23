@@ -30,7 +30,8 @@ namespace Assets.Scripts
 
         private int portalsUsed = 0;
         private int timeLastBooked = -1;
-        private Dictionary<MapLocation, int> gatewayUsage;
+        private Dictionary<MapLocation, bool> gatewayUsage;
+        private Dictionary<MapLocation, int> gatewayBookings;
 
         // Update is called once per frame
         void Update()
@@ -40,13 +41,15 @@ namespace Assets.Scripts
 
         public void Initialize()
         {
-            gatewayUsage = new Dictionary<MapLocation, int>();
+            gatewayUsage = new Dictionary<MapLocation, bool>();
+            gatewayBookings = new Dictionary<MapLocation, int>();
 
             foreach (MapLocation location in gameManager.Map.Locations)
             {
                 if (location is Attraction)
                 {
-                    gatewayUsage.Add(location, -1);
+                    gatewayUsage.Add(location, false);
+                    gatewayBookings.Add(location, -1);
                 }
             }
         }
@@ -55,9 +58,9 @@ namespace Assets.Scripts
         {
             int bookTime = attraction.GetNextGatewayChunk();
 
-            if (gatewayUsage[attraction] < 0 && bookTime > -1)
+            if (gatewayBookings[attraction] < 0 && bookTime > -1)
             {
-                gatewayUsage[attraction] = bookTime;
+                gatewayBookings[attraction] = bookTime;
                 timeLastBooked = gameManager.Timeline.CurrentTimeChunk;
 
                 return true;
@@ -70,10 +73,27 @@ namespace Assets.Scripts
 
         public bool CancelGateway(Attraction attraction)
         {
-            if (gatewayUsage[attraction] >= 0)
+            if (gatewayBookings[attraction] >= 0)
             {
-                gatewayUsage[attraction] = -1;
+                gatewayBookings[attraction] = -1;
                 timeLastBooked = -1;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UseGateway(Attraction attraction)
+        {
+            if (!gatewayUsage[attraction] && gatewayBookings[attraction] >= gameManager.Timeline.CurrentTimeChunk)
+            {
+                gatewayUsage[attraction] = true;
+                gatewayBookings[attraction] = -1;
+
+                attraction.RideGateway();
 
                 return true;
             }
