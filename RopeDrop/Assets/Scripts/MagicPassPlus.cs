@@ -17,9 +17,9 @@ namespace Assets.Scripts
             get { return portalsUsed; }
         }
 
-        public int TimeLastBooked
+        public int NextBookingTime
         {
-            get { return timeLastBooked; }
+            get { return nextBookingTime; }
         }
 
         [SerializeField]
@@ -29,7 +29,7 @@ namespace Assets.Scripts
         private int totalPortals = 1;
 
         private int portalsUsed = 0;
-        private int timeLastBooked = -1;
+        private int nextBookingTime = -1;
         private Dictionary<MapLocation, bool> gatewayUsage;
         private Dictionary<MapLocation, int> gatewayBookings;
 
@@ -60,7 +60,7 @@ namespace Assets.Scripts
             {
                 string bookingTime = gameManager.Timeline.ChunkToText(gatewayBookings[attraction]);
 
-                return string.Format("Gateway booked for {0}", bookingTime);
+                return string.Format("Golden Gateway booked for {0}", bookingTime);
             }
             else if (gatewayBookings[attraction] < 0 && !gatewayUsage[attraction] && attraction.GetNextGateway() > -1)
             {
@@ -74,6 +74,18 @@ namespace Assets.Scripts
             }
         }
 
+        public string GetTwoHourRuleText()
+        {
+            if (nextBookingTime < 0 || nextBookingTime <= gameManager.Timeline.CurrentTimeChunk)
+            {
+                return "You can book your next Golden Gateway now";
+            }
+            else
+            {
+                return string.Format("You can book your next Golden Gateway at {0}", gameManager.Timeline.ChunkToText(nextBookingTime));
+            }
+        }
+
         public int GetGatewayBooking(Attraction attraction)
         {
             return gatewayBookings[attraction];
@@ -81,19 +93,26 @@ namespace Assets.Scripts
 
         public bool BookGateway(Attraction attraction)
         {
-            int bookTime = attraction.GetNextGateway();
-
-            if (!gatewayUsage[attraction] && gatewayBookings[attraction] < 0 && bookTime > -1)
+            if (nextBookingTime < 0 || nextBookingTime <= gameManager.Timeline.CurrentTimeChunk)
             {
-                gatewayBookings[attraction] = bookTime;
-                timeLastBooked = gameManager.Timeline.CurrentTimeChunk;
+                int bookTime = attraction.GetNextGateway();
 
-                return true;
+                if (!gatewayUsage[attraction] && gatewayBookings[attraction] < 0 && bookTime > -1)
+                {
+                    gatewayBookings[attraction] = bookTime;
+                    nextBookingTime = gameManager.Timeline.CurrentTimeChunk + 120 / gameManager.Timeline.TimeChunkSize;
+
+                    return true;
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("No Gateway for {0} available", attraction.LocationName));
+
+                    return false;
+                }
             }
             else
             {
-                Debug.LogWarning(string.Format("No Gateway for {0} available", attraction.LocationName));
-
                 return false;
             }
         }
@@ -103,7 +122,7 @@ namespace Assets.Scripts
             if (gatewayBookings[attraction] >= 0)
             {
                 gatewayBookings[attraction] = -1;
-                timeLastBooked = -1;
+                nextBookingTime = -1;
 
                 return true;
             }
@@ -117,6 +136,7 @@ namespace Assets.Scripts
         {
             if (!gatewayUsage[attraction] && gatewayBookings[attraction] >= gameManager.Timeline.CurrentTimeChunk)
             {
+                nextBookingTime = -1;
                 gatewayUsage[attraction] = true;
                 gatewayBookings[attraction] = -1;
 
@@ -132,7 +152,8 @@ namespace Assets.Scripts
 
         public bool IsGatewayAvailable(Attraction attraction)
         {
-            if (!gatewayUsage[attraction] && gatewayBookings[attraction] < 0 && attraction.GetNextGateway() > -1)
+            if (!gatewayUsage[attraction] && gatewayBookings[attraction] < 0 && attraction.GetNextGateway() > -1 &&
+                (nextBookingTime < 0 || nextBookingTime <= gameManager.Timeline.CurrentTimeChunk))
             {
                 return true;
             }

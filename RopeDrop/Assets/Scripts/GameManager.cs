@@ -102,7 +102,7 @@ namespace RopeDropGame
             map.UpdateAllAttractions();
 
             uiManager.UpdateCurrentTime();
-            uiManager.UpdateScore();
+            uiManager.UpdateAppText();
             uiManager.CloseAttractionPanel();
             uiManager.CloseParkClosedPanel();
         }
@@ -116,6 +116,8 @@ namespace RopeDropGame
         public void ClosePark()
         {
             parkClosed = true;
+
+            map.ClampCameraClosedApp();
 
             uiManager.CloseApp();
             uiManager.OpenParkClosedPanel();

@@ -38,13 +38,31 @@ namespace RopeDropGame
         [SerializeField]
         private float maximumCameraSize;
 
+        private SpriteRenderer mapRenderer;
+
         private Vector3 dragOrigin;
+
+        private float mapMinX;
+        private float mapMinY;
+        private float mapMaxX;
+        private float mapMaxY;
 
         // Update is called once per frame
         void Update()
         {
             PanCamera();
             ZoomCamera();
+        }
+
+        private void Awake()
+        {
+            mapRenderer = GetComponent<SpriteRenderer>();
+
+            mapMinX = mapRenderer.transform.position.x - mapRenderer.bounds.size.x / 2.0f;
+            mapMaxX = mapRenderer.transform.position.x + mapRenderer.bounds.size.x / 2.0f;
+
+            mapMinY = mapRenderer.transform.position.y - mapRenderer.bounds.size.y / 2.0f;
+            mapMaxY = mapRenderer.transform.position.y + mapRenderer.bounds.size.y / 2.0f;
         }
 
         public void Initialize()
@@ -74,6 +92,26 @@ namespace RopeDropGame
             }
         }
 
+        public void ClampCameraClosedApp()
+        {
+            mapMaxX = mapRenderer.transform.position.x + mapRenderer.bounds.size.x / 2.0f;
+
+            gameCamera.orthographicSize = Mathf.Clamp(gameCamera.orthographicSize, 0.0f, 5.0f);
+
+            float camHeight = gameCamera.orthographicSize;
+            float camWidth = gameCamera.orthographicSize * gameCamera.aspect;
+
+            float minX = mapMinX + camWidth;
+            float maxX = mapMaxX - camWidth;
+            float minY = mapMinY + camHeight;
+            float maxY = mapMaxY - camHeight;
+
+            float newX = Mathf.Clamp(gameCamera.transform.position.x, minX, maxX);
+            float newY = Mathf.Clamp(gameCamera.transform.position.y, minY, maxY);
+
+            gameCamera.transform.position = new Vector3(newX, newY, gameCamera.transform.position.z);
+        }
+
         private void PanCamera()
         {
             if (gameManager.UIManager.UIActive)
@@ -89,9 +127,27 @@ namespace RopeDropGame
                 {
                     Vector3 difference = dragOrigin - gameCamera.ScreenToWorldPoint(Input.mousePosition);
 
-                    gameCamera.transform.position += difference;
+                    gameCamera.transform.position = ClampCamera(gameCamera.transform.position + difference);
                 }
             }
+        }
+
+        private Vector3 ClampCamera(Vector3 targetPosition)
+        {
+            float camHeight = gameCamera.orthographicSize;
+            float camWidth = gameCamera.orthographicSize * gameCamera.aspect;
+
+            mapMaxX = (mapRenderer.transform.position.x + mapRenderer.bounds.size.x / 2.0f) * ((camHeight / 10.0f) + 1);
+
+            float minX = mapMinX + camWidth;
+            float maxX = mapMaxX - camWidth;
+            float minY = mapMinY + camHeight;
+            float maxY = mapMaxY - camHeight;
+
+            float newX = Mathf.Clamp(targetPosition.x, minX, maxX);
+            float newY = Mathf.Clamp(targetPosition.y, minY, maxY);
+
+            return new Vector3(newX, newY, targetPosition.z);
         }
 
         private void ZoomCamera()
@@ -105,6 +161,8 @@ namespace RopeDropGame
                     newSize = gameCamera.orthographicSize - (zoomStep * Input.mouseScrollDelta.y);
 
                     gameCamera.orthographicSize = Mathf.Clamp(newSize, minimumCameraSize, maximumCameraSize);
+
+                    gameCamera.transform.position = ClampCamera(gameCamera.transform.position);
                 }
             }
         }

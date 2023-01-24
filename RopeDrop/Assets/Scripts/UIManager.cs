@@ -27,6 +27,9 @@ namespace Assets.Scripts
         private TextMeshProUGUI scoreText;
 
         [SerializeField]
+        private TextMeshProUGUI twoHourRuleText;
+
+        [SerializeField]
         private RectTransform attractionPanel;
 
         [SerializeField]
@@ -78,14 +81,15 @@ namespace Assets.Scripts
             currentTimeText.text = gameManager.Timeline.CurrentTime.ToShortTimeString();
         }
 
-        public void UpdateScore()
+        public void UpdateAppText()
         {
             scoreText.text = gameManager.ScoringSystem.CurrentScoreText;
+            twoHourRuleText.text = gameManager.MagicPass.GetTwoHourRuleText();
         }
 
-        public void UpdateAttractionLabels()
+        public void UpdateAttractionText()
         {
-            attractionPanelHeader.text = selectedAttraction.name;
+            attractionPanelHeader.text = selectedAttraction.LocationName;
 
             attractionPanelStandbyText.text = selectedAttraction.GetStandbyWaitTime();
             attractionPanelGatewayText.text = gameManager.MagicPass.GetGatewayBookingText(selectedAttraction);
@@ -117,7 +121,8 @@ namespace Assets.Scripts
             selectedAttraction = attraction;
 
             UpdateCurrentTime();
-            UpdateAttractionLabels();
+            UpdateAppText();
+            UpdateAttractionText();
 
             if (attraction != gameManager.Pawn.CurrentLocation)
             {
@@ -165,7 +170,8 @@ namespace Assets.Scripts
             gameManager.Map.UpdateAllAttractions();
 
             UpdateCurrentTime();
-            UpdateAttractionLabels();
+            UpdateAppText();
+            UpdateAttractionText();
 
             walkButton.gameObject.SetActive(false);
             standbyButton.gameObject.SetActive(true);
@@ -178,8 +184,8 @@ namespace Assets.Scripts
             gameManager.Map.UpdateAllAttractions();
 
             UpdateCurrentTime();
-            UpdateScore();
-            UpdateAttractionLabels();
+            UpdateAppText();
+            UpdateAttractionText();
         }
 
         public void AttractionPanelBookGatewayButtonOnClick()
@@ -189,7 +195,8 @@ namespace Assets.Scripts
                 Debug.LogError("Failed to book Gateway");
             }
 
-            UpdateAttractionLabels();
+            UpdateAppText();
+            UpdateAttractionText();
         }
 
         public void AttractionPanelRideGatewayButtonOnClick()
@@ -199,8 +206,8 @@ namespace Assets.Scripts
             gameManager.Map.UpdateAllAttractions();
 
             UpdateCurrentTime();
-            UpdateScore();
-            UpdateAttractionLabels();
+            UpdateAppText();
+            UpdateAttractionText();
         }
 
         public void ParkClosedPanelRestartGameButtonOnClick()
